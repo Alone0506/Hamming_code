@@ -106,6 +106,3 @@ input = "0100001100"
 b = Decoder(input, syndrome_bits)
 correct_data = b.decoder()
 print(f"解碼後所得的資料 = {correct_data}")
-
-
-print("testtest")
