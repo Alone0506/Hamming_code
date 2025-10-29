@@ -26,7 +26,7 @@ class Encoder:
         correcting_bits = 0
         for i in range(len(self.data)):
             if self.data[i] == 1:
-                correcting_bits ^= i+1
+                correcting_bits ^= i + 1
         # correcting_bits = 0b1100
 
         # 增加偶同位元(even Parity bit)
@@ -38,7 +38,7 @@ class Encoder:
         correcting_bits = (correcting_bits << 1) + parity_bit
         # correcting_bits = 0b11000
 
-        return "{:b}".format(correcting_bits).zfill(syndrom_width+1)
+        return "{:b}".format(correcting_bits).zfill(syndrom_width + 1)
 
 
 class Decoder:
@@ -47,7 +47,7 @@ class Decoder:
         self.corr_bits = list(map(int, correcting_bits))
 
     def is_correcting_bits_correct(self, corr_bits):
-        corr_bits = int(''.join(map(str, corr_bits)), 2)
+        corr_bits = int("".join(map(str, corr_bits)), 2)
         tmp = corr_bits & 1
         corr_bits >>= 1
         while corr_bits:
@@ -70,7 +70,7 @@ class Decoder:
         # corr_bits = 0b1100
         idx = 1
         while corr_bits:
-            data.insert(idx-1, corr_bits[-1])
+            data.insert(idx - 1, corr_bits[-1])
             del corr_bits[-1]
             idx <<= 1
 
@@ -78,7 +78,7 @@ class Decoder:
         err_idx = 0
         for i in range(len(data)):
             if data[i] == 1:
-                err_idx ^= i+1
+                err_idx ^= i + 1
 
         if err_idx != 0:
             i = 0
@@ -86,12 +86,12 @@ class Decoder:
                 i += 1
             err_idx -= i
 
-            self.data[err_idx-1] ^= 1
+            self.data[err_idx - 1] ^= 1
 
             print(f"資料不正確, 錯誤位置為: {err_idx}(從1開始數)")
         else:
             print("資料正確")
-        return ''.join(map(str, self.data))
+        return "".join(map(str, self.data))
 
 
 input = "0100001101"
@@ -100,9 +100,12 @@ a = Encoder(input)
 syndrome_bits = a.encoder()
 print(f"Hamming code + Even parity bit所產生的糾錯碼 = {syndrome_bits}")
 
-print('')
+print("")
 
 input = "0100001100"
 b = Decoder(input, syndrome_bits)
 correct_data = b.decoder()
 print(f"解碼後所得的資料 = {correct_data}")
+
+
+print("testtest")
